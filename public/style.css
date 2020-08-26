@@ -14,12 +14,29 @@
     height: 200px;
     border: 1px solid black;
 }
-.container-login a{
-    
-}
 .container-login button{
     padding: 10px;
 }
-.container-login button:hover{
-
+#nav{
+    position: absolute;
+    top: 5%;
+    right: 10%;
+}
+.filtres{
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+    margin-left: 50px;
+    margin-top: 50px;
+    /* margin: 0 auto; */
+}
+.form-group{
+    max-width: 500px;
+}
+.checks{
+    display: flex;
+    flex-direction: column;
+}
+.start-button{
+    max-width: 200px;
 }
