@@ -11,6 +11,9 @@ app.set('view engine', 'hbs');
 
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
 passport.use(new VKontakteStrategy({
     clientID:     '7578715',
     clientSecret: '0hBdqSE649f4qCKYvEFR',
@@ -29,39 +32,31 @@ app.listen(3000, () => {
 //========Start========
 
 app.get('/', (req, res) => {
-    res.redirect('/login')
+    res.render('home')
 })
 
 app.get('/login',
   passport.authenticate('vkontakte'),
-  function(req, res){
+  (req, res) => {
     // The request will be redirected to vk.com for authentication, so
     // this function will not be called.
   });
 
 app.get('/auth/vkontakte/callback',
-  passport.authenticate('vkontakte', { 
+passport.authenticate('vkontakte', { 
     failureRedirect: '/login',
     session: false
    }),
-  function(req, res) {
-    res.send(req.user);
-    // res.render('filtres')
+  (req, res) => {
+    // res.send(req.user);
+    res.render('filtres')
   });
 
-// app.use(function(req, res, next){
-//   const err = new Error('Ни хрена не найдено!');
-//   err.status = 404;
-//   next(err);   
-// });
+  app.post('/filtres', (req, res) => {
+      console.log(req.body);
+      res.render('result')
+  })
 
-// app.use(function(err, req, res, next){
-//   res.status(err.status || 500);
-//   res.json({
-//     message: err.message,
-//     error: err
-//   })     
-// })
 
 
 
