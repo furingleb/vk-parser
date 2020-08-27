@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express')
 const path = require('path');
 const app = express()
@@ -15,24 +16,24 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 passport.use(new VKontakteStrategy({
-    clientID:     '7578715',
-    clientSecret: '0hBdqSE649f4qCKYvEFR',
-    callbackURL:  "http://localhost:3000/auth/vkontakte/callback"
-  },
-  function(accessToken, refreshToken, params, profile, done) {
+  clientID: process.env.CLIENT_ID,
+  clientSecret: process.env.CLIENTSECRET,
+  callbackURL: "http://localhost:3000/auth/vkontakte/callback"
+},
+  function (accessToken, refreshToken, params, profile, done) {
     return done(null, profile);
   }
 ));
 
-app.listen(3000, () => {
-    console.log('Listening...');
+app.listen(process.env.PORT, () => {
+  console.log('Listening...');
 })
 
 
 //========Start========
 
 app.get('/', (req, res) => {
-    res.render('home')
+  res.render('home')
 })
 
 app.get('/login',
@@ -43,19 +44,19 @@ app.get('/login',
   });
 
 app.get('/auth/vkontakte/callback',
-passport.authenticate('vkontakte', { 
+  passport.authenticate('vkontakte', {
     failureRedirect: '/login',
     session: false
-   }),
+  }),
   (req, res) => {
     // res.send(req.user);
     res.render('filtres')
   });
 
-  app.post('/filtres', (req, res) => {
-      console.log(req.body);
-      res.render('result')
-  })
+app.post('/filtres', (req, res) => {
+  console.log(req.body);
+  res.render('result')
+})
 
 
 
