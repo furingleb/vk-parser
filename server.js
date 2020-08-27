@@ -63,39 +63,14 @@ app.post('/filtres', async (req, res) => {
 
   console.log(req.body);
   
-  let link = req.body.link
-  let pubName = link.split('/')[3]
+  let pubLink = req.body.link
+  let publicName = pubLink.split('/')[3]
   
-  if(pubName.match(regexp)){
-    let result = '-'+pubName.match(regexp)[0]
+  if(publicName.match(regexp)){
+    let result = '-'+publicName.match(regexp)[0]
     console.log(result);
   } 
-  else console.log(pubName);
-
-  const { link, likes, reposts, comments } = req.body
-  let pubName = link.split('/')[3]
-  let result
-  if (pubName.match(regexp)) {
-    result = 'owner_id=' + '-' + pubName.match(regexp)[0]
-    // console.log('if', result);
-  }
-  else {
-    result = 'domain=' + pubName
-    // console.log('else', pubName);
-  }
-  const posts = await getPosts(result, token);
-  let postsIDs = [];
-  let usersIDs = [];
-  for (let item of posts.response.items) {
-    postsIDs.push(item.id)
-    usersIDs.push(item.created_by);
-
-  }
-
-
-  console.log('postsIDs', postsIDs);
-  console.log('usersIDs', usersIDs);
-  console.log(likes, reposts, comments);
+  else console.log(publicName);
   res.render('result')
 })
 
