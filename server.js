@@ -54,10 +54,23 @@ app.get('/auth/vkontakte/callback',
   });
 
 app.post('/filtres', (req, res) => {
-  console.log(req.body);
+  const regexp = /(?<=public|club)\d+/
+
+  let link = req.body.link
+  let pubName = link.split('/')[3]
+  
+  if(pubName.match(regexp)){
+    let result = '-'+pubName.match(regexp)[0]
+    console.log('if',result);
+  } 
+  else console.log('else',pubName);
+
   res.render('result')
 })
 
+//http://vk.com/public23456
+//http://vk.com/club23456
+//https://vk.com/4zubkov6
 
 
 
