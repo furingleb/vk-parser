@@ -8,16 +8,17 @@ const session = require("express-session");
 const passport = require('passport')
 const VKontakteStrategy = require('passport-vkontakte').Strategy;
 const { getPostsIDs, getUsers } = require('./getPosts/getPosts')
+const { countAll } = require('./count-activity/count.js')
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(logger('dev'));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
-let token;
 
 passport.use(new VKontakteStrategy({
   clientID: process.env.CLIENT_ID,
@@ -25,7 +26,7 @@ passport.use(new VKontakteStrategy({
   callbackURL: "http://localhost:3000/auth/vkontakte/callback"
 },
   function (accessToken, refreshToken, params, profile, done) {
-    token = accessToken;
+    app.locals.token = accessToken;
     return done(null, profile);
   }
 ));
@@ -33,7 +34,6 @@ passport.use(new VKontakteStrategy({
 app.listen(process.env.PORT, () => {
   console.log('Listening...');
 })
-
 
 //========Start========
 
@@ -54,40 +54,29 @@ app.get('/auth/vkontakte/callback',
     session: false
   }),
   (req, res) => {
-    // res.send(req.user);
-    res.render('filtres')
+    res.redirect('/filtres')
   });
 
+app.get('/filtres', (req, res) => {
+  res.render('filtres')
+})
+
 app.post('/filtres', async (req, res) => {
-  const regexp = /(?<=public|club)\d+/
-<<<<<<< HEAD
-  const { link, likes, reposts, comments } = req.body
+  const regexp = /(?<=public|club)\d+/;
+  const { link, likes, reposts, comments, count } = req.body;
   let pubName = link.split('/')[3]
-  let result
+  let result;
   if (pubName.match(regexp)) {
     result = 'owner_id=' + '-' + pubName.match(regexp)[0]
-    // console.log('if', result);
   }
   else {
     result = 'domain=' + pubName
-    // console.log('else', pubName);
   }
-  const postIDs = await getPostsIDs(result, token);
-  const usersWhoMadePosts = await getUsers(result, token);
-  console.log(postIDs, usersWhoMadePosts);
-=======
+  const postIDs = await getPostsIDs(result, app.locals.token, count);
+  const usersWhoMadePosts = await getUsers(result, app.locals.token, count);
 
-  console.log(req.body);
-  
-  let pubLink = req.body.link
-  let publicName = pubLink.split('/')[3]
-  
-  if(publicName.match(regexp)){
-    let result = '-'+publicName.match(regexp)[0]
-    console.log(result);
-  } 
-  else console.log(publicName);
->>>>>>> a6284879302e873df69ea707a97f92e5d7d35b5c
+  const activity = await countAll(postIDs, app.locals.token, usersWhoMadePosts.owner_id)
+  console.log(activity);
   res.render('result')
 })
 

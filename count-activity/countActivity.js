@@ -4,6 +4,8 @@ const userLikes = {};
 const userComments = {};
 const userPosts = {};
 
+const time = 350
+
 // LIKES >>>
 async function countLikesForPost(postId, token, groupId) {
   const response = await fetch(`https://api.vk.com/method/likes.getList?&type=post&access_token=${token}&owner_id=${groupId}&item_id=${postId}&offset=0&v=5.122&count=1000`);
@@ -20,8 +22,23 @@ async function countLikesForPost(postId, token, groupId) {
 }
 
 async function countLikesAllPosts(postsArray, token, groupId) {
+  let i = 0;
+
+  // let interval = setInterval(async () => {
+  //   console.log(i);
+  //   console.log(token);
+  //   if (i === postsArray.length - 1) clearInterval(interval);
+  //   await countLikesForPost(postsArray[i], token, groupId);
+  // }, 600)
+  // i++;
+
   for (const postId of postsArray) {
-    await countLikesForPost(postId, token, groupId)
+    await new Promise(resolve => {
+      setTimeout(() => {
+        countLikesForPost(postId, token, groupId)
+        resolve()
+      }, time)
+    })
   }
   return userLikes;
 }
@@ -43,9 +60,18 @@ async function countCommentsForPost(postId, token, groupId) {
 }
 
 async function countCommentsAllPosts(postsArray, token, groupId) {
+  // for (const postId of postsArray) {
+  //   await countCommentsForPost(postId, token, groupId)
+  // }
   for (const postId of postsArray) {
-    await countCommentsForPost(postId, token, groupId)
+    await new Promise(resolve => {
+      setTimeout(() => {
+        countCommentsForPost(postId, token, groupId)
+        resolve()
+      }, time)
+    })
   }
+
   return userComments;
 }
 
@@ -65,8 +91,16 @@ async function countRepostsForPost(postId, token, groupId) {
 }
 
 async function countRepostsAllPosts(postsArray, token, groupId) {
+  // for (const postId of postsArray) {
+  //   await countRepostsForPost(postId, token, groupId)
+  // }
   for (const postId of postsArray) {
-    await countRepostsForPost(postId, token, groupId)
+    await new Promise(resolve => {
+      setTimeout(() => {
+        countRepostsForPost(postId, token, groupId)
+        resolve()
+      }, time)
+    })
   }
   return userPosts;
 }
