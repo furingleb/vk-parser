@@ -60,6 +60,7 @@ app.get('/auth/vkontakte/callback',
 
 app.post('/filtres', async (req, res) => {
   const regexp = /(?<=public|club)\d+/
+<<<<<<< HEAD
   const { link, likes, reposts, comments } = req.body
   let pubName = link.split('/')[3]
   let result
@@ -74,6 +75,19 @@ app.post('/filtres', async (req, res) => {
   const postIDs = await getPostsIDs(result, token);
   const usersWhoMadePosts = await getUsers(result, token);
   console.log(postIDs, usersWhoMadePosts);
+=======
+
+  console.log(req.body);
+  
+  let pubLink = req.body.link
+  let publicName = pubLink.split('/')[3]
+  
+  if(publicName.match(regexp)){
+    let result = '-'+publicName.match(regexp)[0]
+    console.log(result);
+  } 
+  else console.log(publicName);
+>>>>>>> a6284879302e873df69ea707a97f92e5d7d35b5c
   res.render('result')
 })
 

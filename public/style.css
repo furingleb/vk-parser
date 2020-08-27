@@ -1,3 +1,27 @@
+body{
+    /* background-image: url(blue_bg.jpg); */
+}
+
+/*=====Home======*/
+
+a.loginAnchor{
+    color: white;
+    font-family: 'Balsamiq Sans', cursive;
+    font-weight: 700;
+    font-size: 30px;
+}
+.buttonLogin{
+    border: 1px solid black;
+    border-radius: 10px;
+    background: linear-gradient(#e66465, #9198e5);
+}
+.buttonLogin:hover{
+    background: linear-gradient(to left, #9198e5, #e66465);
+}
+.buttonLogin:active{
+    background: linear-gradient(to right, #9198e5, #e66465);
+}
+
 .container{
     width: 100vw;
     height: 100vh;
@@ -22,13 +46,100 @@
     top: 5%;
     right: 10%;
 }
+
+/*Cover*/
+/*
+ * Globals
+ */
+/* Links */
+a,
+a:focus,
+a:hover {
+  color: #fff;
+}
+/* Custom default button */
+.btn-secondary {
+  color: #333;
+  text-shadow: none; /* Prevent inheritance from `body` */
+  background-color: #fff;
+  border: .05rem solid #fff;
+}
+/*
+ * Base structure
+ */
+
+html,
+body {
+  height: 100%;
+  background-color: #333;
+}
+body {
+  display: -ms-flexbox;
+  display: flex;
+  color: #fff;
+  text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);
+  box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5);
+}
+.cover-container {
+  max-width: 42em;
+}
+/*
+ * Header
+ */
+.masthead {
+  margin-bottom: 2rem;
+}
+.masthead-brand {
+  margin-bottom: 0;
+}
+.nav-masthead .nav-link {
+  padding: .25rem 0;
+  font-weight: 700;
+  color: rgba(255, 255, 255, .5);
+  background-color: transparent;
+  border-bottom: .25rem solid transparent;
+}
+.nav-masthead .nav-link:hover,
+.nav-masthead .nav-link:focus {
+  border-bottom-color: rgba(255, 255, 255, .25);
+}
+.nav-masthead .nav-link + .nav-link {
+  margin-left: 1rem;
+}
+.nav-masthead .active {
+  color: #fff;
+  border-bottom-color: #fff;
+}
+.font{
+    font-family: 'Nunito', sans-serif;
+}
+@media (min-width: 48em) {
+  .masthead-brand {
+    float: left;
+  }
+  .nav-masthead {
+    float: right;
+  }
+}
+/** Cover*/
+.cover {
+  padding: 0 1.5rem;
+}
+.cover .btn-lg {
+  padding: .75rem 1.25rem;
+  font-weight: 700;
+}
+/** Footer*/
+.mastfoot {
+  color: rgba(255, 255, 255, .5);
+}
+
+
+/*========Filtres========*/
+
 .filtres{
-    /* display: flex;
-    justify-content: center;
-    align-items: center; */
     margin-left: 50px;
     margin-top: 50px;
-    /* margin: 0 auto; */
 }
 .form-group{
     max-width: 500px;
@@ -37,12 +148,36 @@
     display: flex;
     flex-direction: column;
 }
-.start-button{
-    max-width: 200px;
+label{
+    color: white;
+    font-family: 'Balsamiq Sans', cursive;
+    font-weight: 700;
+    font-size: 18px;
 }
+.start-button{
+border: none;
+}
+/* .start-button{
+    color: white;
+    font-family: 'Balsamiq Sans', cursive;
+    font-weight: 700;
+    font-size: 30px;
+    max-width: 200px;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 10px;
+    background: linear-gradient(#e66465, #9198e5);
+}
+.start-button:hover{
+    background: linear-gradient(to left, #9198e5, #e66465);
+}
+.start-button:active{
+    background: linear-gradient(to right, #9198e5, #e66465);
+} */
+
+/*=========Result========*/
+
 .ratingList{
-    background: linear-gradient(217deg, rgba(255,0,0,.8), rgba(255,0,0,0) 70.71%),
-            linear-gradient(127deg, rgba(0,255,0,.8), rgba(0,255,0,0) 70.71%),linear-gradient(336deg, rgba(0,0,255,.8), rgba(0,0,255,0) 70.71%);
     height: 90vh;
     position: absolute;
     top: 5%;
