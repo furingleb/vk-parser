@@ -7,7 +7,7 @@ const logger = require('morgan');
 const session = require("express-session");
 const passport = require('passport')
 const VKontakteStrategy = require('passport-vkontakte').Strategy;
-const getPosts = require('./getPosts/getPosts')
+const { getPostsIDs, getUsers } = require('./getPosts/getPosts')
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
@@ -60,6 +60,22 @@ app.get('/auth/vkontakte/callback',
 
 app.post('/filtres', async (req, res) => {
   const regexp = /(?<=public|club)\d+/
+<<<<<<< HEAD
+  const { link, likes, reposts, comments } = req.body
+  let pubName = link.split('/')[3]
+  let result
+  if (pubName.match(regexp)) {
+    result = 'owner_id=' + '-' + pubName.match(regexp)[0]
+    // console.log('if', result);
+  }
+  else {
+    result = 'domain=' + pubName
+    // console.log('else', pubName);
+  }
+  const postIDs = await getPostsIDs(result, token);
+  const usersWhoMadePosts = await getUsers(result, token);
+  console.log(postIDs, usersWhoMadePosts);
+=======
 
   console.log(req.body);
   
@@ -71,6 +87,7 @@ app.post('/filtres', async (req, res) => {
     console.log(result);
   } 
   else console.log(publicName);
+>>>>>>> a6284879302e873df69ea707a97f92e5d7d35b5c
   res.render('result')
 })
 
