@@ -104,10 +104,10 @@ app.post('/filtres', async (req, res) => {
   else {
     result = 'domain=' + pubName
   }
-  const postIDs = await getPostsIDs(result, app.locals.token, count);
-  const usersWhoMadePosts = await getUsers(result, app.locals.token, count);
+  const postIDs = await getPostsIDs(result, token.access_token, count);
+  const usersWhoMadePosts = await getUsers(result, token.access_token, count);
 
-  const activity = await countAll(postIDs, app.locals.token, usersWhoMadePosts.owner_id)
+  const activity = await countAll(postIDs, token.access_token, usersWhoMadePosts.owner_id)
 
   const merged = mergedResults([activity.likes, activity.comments])
   const array = Object.entries(merged)
