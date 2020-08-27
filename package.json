@@ -10,14 +10,17 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cookie-parser": "^1.4.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
     "hbs": "^4.1.1",
+    "mongoose": "^5.10.1",
     "morgan": "^1.10.0",
     "node-fetch": "^2.6.0",
     "nodemon": "^2.0.4",
     "passport": "^0.4.1",
-    "passport-vkontakte": "^0.3.3"
+    "passport-vkontakte": "^0.3.3",
+    "session-file-store": "^1.4.0"
   }
 }

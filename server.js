@@ -1,10 +1,15 @@
-
+const User = require('./db/db')
 require('dotenv').config()
 const express = require('express')
 const path = require('path');
+
+// sessions and cookies
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
+const FileStore = require('session-file-store')(session);
+
 const app = express()
 const logger = require('morgan');
-const session = require("express-session");
 const passport = require('passport')
 const VKontakteStrategy = require('passport-vkontakte').Strategy;
 const { getPostsIDs, getUsers } = require('./getPosts/getPosts')
@@ -21,13 +26,35 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+//cookie parser
+app.use(cookieParser());
+
+app.use(session({
+  store: new FileStore(),
+  key: "user_sid",
+  secret: "anything",
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    expires: 600000
+  }
+})
+);
+
 passport.use(new VKontakteStrategy({
   clientID: process.env.CLIENT_ID,
   clientSecret: process.env.CLIENTSECRET,
   callbackURL: "http://localhost:3000/auth/vkontakte/callback"
 },
-  function (accessToken, refreshToken, params, profile, done) {
-    app.locals.token = accessToken;
+
+  async function (accessToken, refreshToken, params, profile, done) {
+    // console.log(params);
+    const user = await User.findOne({ user_id: params.user_id })
+    if (user) {
+      await User.findOneAndUpdate({ user_id: user.user_id }, { access_token: accessToken })
+    } else {
+      await User.create({ user_id: params.user_id, access_token: accessToken })
+    }
     return done(null, profile);
   }
 ));
@@ -55,6 +82,8 @@ app.get('/auth/vkontakte/callback',
     session: false
   }),
   (req, res) => {
+    console.log(req.user);
+    req.session.user_id = req.user.id
     res.redirect('/filtres')
   });
 
@@ -63,6 +92,8 @@ app.get('/filtres', (req, res) => {
 })
 
 app.post('/filtres', async (req, res) => {
+
+  const token = await User.findOne({ user_id: req.session.user_id })
   const regexp = /(?<=public|club)\d+/;
   const { link, likes, reposts, comments, count } = req.body;
   let pubName = link.split('/')[3]
@@ -73,7 +104,6 @@ app.post('/filtres', async (req, res) => {
   else {
     result = 'domain=' + pubName
   }
-
   const postIDs = await getPostsIDs(result, app.locals.token, count);
   const usersWhoMadePosts = await getUsers(result, app.locals.token, count);
 
