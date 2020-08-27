@@ -7,7 +7,7 @@ const logger = require('morgan');
 const session = require("express-session");
 const passport = require('passport')
 const VKontakteStrategy = require('passport-vkontakte').Strategy;
-const getPosts = require('./getPosts/getPosts')
+const { getPostsIDs, getUsers } = require('./getPosts/getPosts')
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
@@ -71,18 +71,9 @@ app.post('/filtres', async (req, res) => {
     result = 'domain=' + pubName
     // console.log('else', pubName);
   }
-  const posts = await getPosts(result, token);
-  let postsIDs = [];
-  let usersIDs = [];
-  for (let item of posts.response.items) {
-    postsIDs.push(item.id)
-    usersIDs.push(item.created_by);
-
-  }
-
-  console.log('postsIDs', postsIDs);
-  console.log('usersIDs', usersIDs);
-  console.log(likes, reposts, comments);
+  const postIDs = await getPostsIDs(result, token);
+  const usersWhoMadePosts = await getUsers(result, token);
+  console.log(postIDs, usersWhoMadePosts);
   res.render('result')
 })
 
