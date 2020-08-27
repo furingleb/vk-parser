@@ -55,15 +55,16 @@ app.get('/auth/vkontakte/callback',
 
 app.post('/filtres', (req, res) => {
   const regexp = /(?<=public|club)\d+/
-
+  console.log(req.body);
+  
   let link = req.body.link
   let pubName = link.split('/')[3]
   
   if(pubName.match(regexp)){
     let result = '-'+pubName.match(regexp)[0]
-    console.log('if',result);
+    console.log(result);
   } 
-  else console.log('else',pubName);
+  else console.log(pubName);
 
   res.render('result')
 })
