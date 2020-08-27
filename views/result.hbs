@@ -11,14 +11,17 @@
         </nav>
       </div>
     </header>
-    {activity}
+
+
+    {{!-- {{#each array}}
+    <p>{{this[0]}}</p>
+    {{/each}} --}}
+
     <div class="container ratingList">
       <div class="list-group">
-        <a href="#" class="list-group-item list-group-item-action">Васильев Геннадий:</a>
-        <a href="#" class="list-group-item list-group-item-action">Васильев Геннадий:</a>
-        <a href="#" class="list-group-item list-group-item-action">Васильев Геннадий:</a>
-        <a href="#" class="list-group-item list-group-item-action">Васильев Геннадий:</a>
-        <a href="#" class="list-group-item list-group-item-action">Васильев Геннадий:</a>
+        {{#each sorted}}
+        <a href="https://vk.com/id{{this.id}}" class="list-group-item list-group-item-action">{{this.id}} = {{this.count}}</a>
+        {{/each}}
       </div>
     </div>
     <footer class="mastfoot mt-auto">
