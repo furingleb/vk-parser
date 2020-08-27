@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express')
 const path = require('path');
 const app = express()
@@ -12,33 +13,37 @@ app.set('view engine', 'hbs');
 
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+let token;
 
 passport.use(new VKontakteStrategy({
-  clientID: '7578715',
-  clientSecret: '0hBdqSE649f4qCKYvEFR',
+  clientID: process.env.CLIENT_ID,
+  clientSecret: process.env.CLIENTSECRET,
   callbackURL: "http://localhost:3000/auth/vkontakte/callback"
 },
-  async function (accessToken, refreshToken, params, profile, done) {
-    console.log(accessToken);
-    console.log(params);
-    console.log(refreshToken);
-    console.log(profile);
+  function (accessToken, refreshToken, params, profile, done) {
+    token = accessToken;
     return done(null, profile);
   }
 ));
 
+app.listen(process.env.PORT, () => {
+  console.log('Listening...');
+})
 
 app.use
 
 //========Start========
 
 app.get('/', (req, res) => {
-  res.redirect('/login')
+  res.render('home')
 })
 
 app.get('/login',
   passport.authenticate('vkontakte'),
-  function (req, res) {
+  (req, res) => {
     // The request will be redirected to vk.com for authentication, so
     // this function will not be called.
   });
@@ -48,32 +53,23 @@ app.get('/auth/vkontakte/callback',
     failureRedirect: '/login',
     session: false
   }),
-  async function (req, res) {
-    console.log(req.user.id);
-    const response = await fetch(`https://oauth.vk.com/authorize?client_id=7578715&display=page&redirect_uri=https://oauth.vk.com/blank.html&scope=friends&response_type=token&v=5.122`)
-    const resp = await response.text()
-    res.send(req.user);
-    // res.render('filtres')
+  (req, res) => {
+    // res.send(req.user);
+    console.log(req.accessToken);
+    res.render('filtres')
   });
 
+app.post('/filtres', (req, res) => {
+  const { link, likes, reposts, comments } = req.body
 
-// app.use(function(req, res, next){
-//   const err = new Error('Ни хрена не найдено!');
-//   err.status = 404;
-//   next(err);   
-// });
-
-// app.use(function(err, req, res, next){
-//   res.status(err.status || 500);
-//   res.json({
-//     message: err.message,
-//     error: err
-//   })     
-// })
+  console.log(link, likes, reposts, comments);
+  res.render('result')
+})
 
 
+module.exports = token
 
-app.listen(3000, () => {
+app.listen(3001, () => {
   console.log('Listening...');
 })
 
