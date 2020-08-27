@@ -9,7 +9,7 @@ const postIds = ['20844', '20826', '20818'];
 const userLikes = {};
 const userComments = {};
 
-// LIKES
+// LIKES >>>
 async function countLikesForPost(postId) {
   const response = await fetch(`https://api.vk.com/method/likes.getList?&type=post&access_token=${token}&owner_id=${groupId}&item_id=${postId}&offset=0&v=5.122&count=1000`);
   const final = await response.json();
@@ -30,7 +30,7 @@ async function countLikesAllPosts(postsArray) {
   }
 }
 
-// COMMENTS
+// COMMENTS >>>
 // TODO comments for comments?
 async function countCommentsForPost(postId) {
   const response = await fetch(`https://api.vk.com/method/wall.getComments?&owner_id=${groupId}&post_id=${postId}&need_likes=1&access_token=${token}&v=5.122&count=100`)
@@ -51,6 +51,9 @@ async function countCommentsAllPosts(postsArray) {
     await countCommentsForPost(postId)
   }
 }
+
+// REPOSTS >>>
+// ???????????
 
 countLikesAllPosts(postIds).then(_ => console.log(userLikes));
 countCommentsAllPosts(postIds).then(_ => console.log(userComments));
