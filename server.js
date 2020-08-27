@@ -9,6 +9,7 @@ const passport = require('passport')
 const VKontakteStrategy = require('passport-vkontakte').Strategy;
 const { getPostsIDs, getUsers } = require('./getPosts/getPosts')
 const { countAll } = require('./count-activity/count.js')
+const mergedResults = require('./count-activity/mergeActivity')
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
@@ -72,12 +73,39 @@ app.post('/filtres', async (req, res) => {
   else {
     result = 'domain=' + pubName
   }
+
   const postIDs = await getPostsIDs(result, app.locals.token, count);
   const usersWhoMadePosts = await getUsers(result, app.locals.token, count);
 
   const activity = await countAll(postIDs, app.locals.token, usersWhoMadePosts.owner_id)
-  console.log(activity);
-  res.render('result')
+
+  const merged = mergedResults([activity.likes, activity.comments])
+  const array = Object.entries(merged)
+
+  // const sorted = array.sort((a, b) => {
+  //   a[1] - b[1]
+  // })
+
+  let sorted = array.sort((a, b) => {
+    return b[1] - a[1];
+  }).slice(0, 10);
+
+  console.log(sorted);
+  // let ids = [];
+
+  sorted = sorted.map(el => {
+    return { id: el[0], count: el[1] }
+  })
+
+  console.log(sorted);
+
+  // {
+  //   user1: { id: 13123, count: 3 },
+  //   user2: { id: 213231, count: 5 },
+  // }
+
+
+  res.render('result', { sorted })
 })
 
 
