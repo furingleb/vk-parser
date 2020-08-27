@@ -1,23 +1,52 @@
+<body class="text-center">
+        <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+            <header class="masthead mb-auto">
+        <div class="inner">
+        <h3 class="masthead-brand font">ActiveVK</h3>
+        <nav class="nav nav-masthead justify-content-center">
+            {{!-- <a class="nav-link font active " href="#">Home</a> --}}
+            {{!-- <a class="nav-link font" href="#">Features</a> --}}
+            <a class="nav-link font" href="#">Contact us</a>
+        </nav>
+        </div>
+    </header>
+
 <form method='POST' action="/filtres" class="filtres">
     <div class="form-group">
-        <label for="exampleFormControlInput1">Ссылка на паблик:</label>
+        <label class="font" for="exampleFormControlInput1">Ссылка на паблик:</label>
         <input type="url" class="form-control" id="exampleFormControlInput1" placeholder="https://vk.com/no_pratein" name="link">
     </div>
-    <label for="">Выберите:</label>
+
+    <label class="font" for="">По каким параметрам искать:</label>
     <div class="checks">
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" name="likes">
-            <label class="form-check-label" for="inlineCheckbox1">Лайки</label>
-        </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2" name="reposts">
-            <label class="form-check-label" for="inlineCheckbox2">Репосты</label>
-        </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3" name="comments">
-            <label class="form-check-label" for="inlineCheckbox3">Комменты</label>
+
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="true" name="likes">
+        <label class="form-check-label font" for="inlineCheckbox1">Лайки</label>
+
         </div>
 
-        <input type="submit" value="Начать" tabindex="3" class="start-button">
+        <div class="form-check form-check-inline">
+
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="true" name="reposts">
+        <label class="form-check-label font" for="inlineCheckbox2">Репосты</label>
+
+        </div>
+
+        <div class="form-check form-check-inline">
+
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="true" name="comments">
+        <label class="form-check-label font" for="inlineCheckbox3">Комменты</label>
+
+        </div>
+
+       <input class="btn btn-lg btn-secondary font start-button" type="submit" value="Начать" tabindex="3">
     </div>
 </form>
+<footer class="mastfoot mt-auto">
+    <div class="inner font">
+      <p>Copyright &copy; </p>
+    </div>
+  </footer>
+  </div>
+</body>
