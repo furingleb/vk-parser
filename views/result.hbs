@@ -14,11 +14,16 @@
     {activity}
     <div class="container ratingList">
       <div class="list-group">
+          <ul>
+          {{#each activity}}
+            <li>>>>>{{activity}}</li>
+        {{!-- <a href="#" class="list-group-item list-group-item-action">{{user.id}}</a> --}}
+        {{/each}}
+        </ul>
+        {{!-- <a href="#" class="list-group-item list-group-item-action">Васильев Геннадий:</a>
         <a href="#" class="list-group-item list-group-item-action">Васильев Геннадий:</a>
         <a href="#" class="list-group-item list-group-item-action">Васильев Геннадий:</a>
-        <a href="#" class="list-group-item list-group-item-action">Васильев Геннадий:</a>
-        <a href="#" class="list-group-item list-group-item-action">Васильев Геннадий:</a>
-        <a href="#" class="list-group-item list-group-item-action">Васильев Геннадий:</a>
+        <a href="#" class="list-group-item list-group-item-action">Васильев Геннадий:</a> --}}
       </div>
     </div>
     <footer class="mastfoot mt-auto">

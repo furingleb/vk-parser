@@ -155,7 +155,7 @@ label{
     font-size: 18px;
 }
 .start-button{
-border: none;
+    max-width: 500px;
 }
 /* .start-button{
     color: white;
