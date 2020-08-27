@@ -1,12 +1,13 @@
+
 require('dotenv').config()
 const express = require('express')
 const path = require('path');
 const app = express()
 const logger = require('morgan');
 const session = require("express-session");
-const passport = require('passport');
-const fetch = require('node-fetch');
+const passport = require('passport')
 const VKontakteStrategy = require('passport-vkontakte').Strategy;
+const getPosts = require('./getPosts/getPosts')
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
@@ -33,7 +34,6 @@ app.listen(process.env.PORT, () => {
   console.log('Listening...');
 })
 
-app.use
 
 //========Start========
 
@@ -55,24 +55,35 @@ app.get('/auth/vkontakte/callback',
   }),
   (req, res) => {
     // res.send(req.user);
-    console.log(req.accessToken);
     res.render('filtres')
   });
 
-app.post('/filtres', (req, res) => {
+app.post('/filtres', async (req, res) => {
+  const regexp = /(?<=public|club)\d+/
   const { link, likes, reposts, comments } = req.body
+  let pubName = link.split('/')[3]
+  let result
+  if (pubName.match(regexp)) {
+    result = 'owner_id=' + '-' + pubName.match(regexp)[0]
+    // console.log('if', result);
+  }
+  else {
+    result = 'domain=' + pubName
+    // console.log('else', pubName);
+  }
+  const posts = await getPosts(result, token);
+  let postsIDs = [];
+  let usersIDs = [];
+  for (let item of posts.response.items) {
+    postsIDs.push(item.id)
+    usersIDs.push(item.created_by);
 
-  console.log(link, likes, reposts, comments);
+  }
+
+  console.log('postsIDs', postsIDs);
+  console.log('usersIDs', usersIDs);
+  console.log(likes, reposts, comments);
   res.render('result')
 })
-
-
-module.exports = token
-
-app.listen(3001, () => {
-  console.log('Listening...');
-})
-
-
 
 
