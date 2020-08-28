@@ -13,16 +13,51 @@
         </nav>
       </div>
     </header>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">User ID</th>
+          {{#if likes}}
+          <th scope="col">Likes</th>
+          {{/if}}
+          {{#if comments}}
+          <th scope="col">Comments</th>
+          {{/if}}
+          {{#if reposts}}
+          <th scope="col">Reposts</th>
+          {{/if}}
+        </tr>
+      </thead>
+      <tbody>
+        {{#each toRender}}
+        <tr>
+          <th scope="row">{{this.index}}</th>
+          <td><a href="https://vk.com/id{{id}}" target="_blank">{{this.id}}</a></td>
+          {{#if ...likes}}
+          <td>{{this.likes}}</td>
+          {{/if}}
+          {{#if ...comments}}
+          <td>{{this.comments}}</td>
+          {{/if}}
+          {{#if ...reposts}}
+          <td>{{this.reposts}}</td>
+          {{/if}}
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
 
     <div class="container ratingList">
-      <div class="list-group">
+
+      {{!-- <div class="list-group">
         {{#each toRender}}
         <a target="_blank" href="https://vk.com/id{{this.id}}" class="list-group-item list-group-item-action">
           {{this.index}} - UserID:{{this.id}} likes: {{this.likes}} comments: {{this.comments}} reposts:
           {{this.reposts}}
         </a>
         {{/each}}
-      </div>
+      </div> --}}
     </div>
     <footer class="mastfoot mt-auto">
       <div class="inner font">

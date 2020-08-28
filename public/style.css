@@ -233,3 +233,11 @@ label{
 .lightTheme .list-group-item{
   color: antiquewhite;
 }
+
+.table {
+  color: antiquewhite;
+}
+
+table {
+  z-index: 1000;
+}

@@ -31,7 +31,7 @@ router.post('/filtres', async (req, res) => {
 
   const toRender = convertTransform(activity)
 
-  res.render('result', { toRender })
+  res.render('result', { toRender, likes, comments, reposts })
 })
 
 module.exports = router;

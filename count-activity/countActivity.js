@@ -1,13 +1,14 @@
 const fetch = require('node-fetch');
 
-const userLikes = {};
-const userComments = {};
-const userPosts = {};
+let userLikes = {};
+let userComments = {};
+let userPosts = {};
 
 const time = 350
 
 // LIKES >>>
 async function countLikesForPost(postId, token, groupId) {
+
   const response = await fetch(`https://api.vk.com/method/likes.getList?&type=post&access_token=${token}&owner_id=${groupId}&item_id=${postId}&offset=0&v=5.122&count=1000`);
   const final = await response.json();
   const likesArray = final.response.items;
@@ -22,6 +23,7 @@ async function countLikesForPost(postId, token, groupId) {
 }
 
 async function countLikesAllPosts(postsArray, token, groupId) {
+  userLikes = {}
   let i = 0;
 
   // let interval = setInterval(async () => {
@@ -46,6 +48,7 @@ async function countLikesAllPosts(postsArray, token, groupId) {
 // COMMENTS >>>
 // TODO comments for comments?
 async function countCommentsForPost(postId, token, groupId) {
+
   const response = await fetch(`https://api.vk.com/method/wall.getComments?&owner_id=${groupId}&post_id=${postId}&need_likes=1&access_token=${token}&v=5.122&count=100`)
   const final = await response.json();
   const commentsArray = final.response.items
@@ -63,6 +66,7 @@ async function countCommentsAllPosts(postsArray, token, groupId) {
   // for (const postId of postsArray) {
   //   await countCommentsForPost(postId, token, groupId)
   // }
+  userComments = {};
   for (const postId of postsArray) {
     await new Promise(resolve => {
       setTimeout(() => {
@@ -91,6 +95,7 @@ async function countRepostsForPost(postId, token, groupId) {
 }
 
 async function countRepostsAllPosts(postsArray, token, groupId) {
+  userPosts = {};
   // for (const postId of postsArray) {
   //   await countRepostsForPost(postId, token, groupId)
   // }
