@@ -1,5 +1,5 @@
-const User = require('./db/db')
 require('dotenv').config()
+const User = require('./db/db')
 const express = require('express')
 const path = require('path');
 
@@ -53,8 +53,9 @@ passport.use(new VKontakteStrategy({
       await User.findOneAndUpdate({ user_id: user.user_id }, { access_token: accessToken })
     } else {
       await User.create({ user_id: params.user_id, access_token: accessToken })
+
     }
-    return done(null, profile);
+
   }
 ));
 
