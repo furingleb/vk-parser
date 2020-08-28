@@ -108,7 +108,6 @@ app.post('/filtres', async (req, res) => {
   const activity = await countAll(postIDs, token.access_token, usersWhoMadePosts.owner_id)
 
   const toRender = convertTransform(activity)
-  console.log(toRender);
 
   res.render('result', { toRender })
 })
