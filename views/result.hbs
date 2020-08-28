@@ -1,3 +1,5 @@
+<script defer src="/currentTheme.js"></script>
+
 <body class="text-center">
   <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
     <header class="masthead mb-auto">
@@ -12,16 +14,13 @@
       </div>
     </header>
 
-
-    {{!-- {{#each array}}
-    <p>{{this[0]}}</p>
-    {{/each}} --}}
-
     <div class="container ratingList">
       <div class="list-group">
-        {{#each sorted}}
-        <a href="https://vk.com/id{{this.id}}" class="list-group-item list-group-item-action">{{this.id}} =
-          {{this.count}}</a>
+        {{#each toRender}}
+        <a target="_blank" href="https://vk.com/id{{this.id}}" class="list-group-item list-group-item-action">
+          {{this.index}} - UserID:{{this.id}} likes: {{this.likes}} comments: {{this.comments}} reposts:
+          {{this.reposts}}
+        </a>
         {{/each}}
       </div>
     </div>

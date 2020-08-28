@@ -13,4 +13,4 @@ const mergedResults = (arr) => {
   return result;
 }
 
-module.exports = mergedResults;
+module.exports = { mergedResults };
