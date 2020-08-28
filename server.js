@@ -1,5 +1,5 @@
-const User = require('./db/db')
 require('dotenv').config()
+const User = require('./db/db')
 const express = require('express')
 const path = require('path');
 
