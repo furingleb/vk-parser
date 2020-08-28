@@ -12,16 +12,13 @@
       </div>
     </header>
 
-
-    {{!-- {{#each array}}
-    <p>{{this[0]}}</p>
-    {{/each}} --}}
-
     <div class="container ratingList">
       <div class="list-group">
-        {{#each sorted}}
-        <a href="https://vk.com/id{{this.id}}" class="list-group-item list-group-item-action">{{this.id}} =
-          {{this.count}}</a>
+        {{#each toRender}}
+        <a href="https://vk.com/id{{this.id}}" class="list-group-item list-group-item-action">
+          {{this.index}} - UserID:{{this.id}} likes: {{this.likes}} comments: {{this.comments}} reposts:
+          {{this.reposts}}
+        </a>
         {{/each}}
       </div>
     </div>

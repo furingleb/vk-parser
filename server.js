@@ -13,8 +13,8 @@ const logger = require('morgan');
 const passport = require('passport')
 const VKontakteStrategy = require('passport-vkontakte').Strategy;
 const { getPostsIDs, getUsers } = require('./getPosts/getPosts')
-const { countAll } = require('./count-activity/count.js')
-const mergedResults = require('./count-activity/mergeActivity')
+const { countAll } = require('./count-activity/count.js');
+const { convertTransform } = require('./count-activity/transform.js')
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
@@ -48,7 +48,6 @@ passport.use(new VKontakteStrategy({
 },
 
   async function (accessToken, refreshToken, params, profile, done) {
-    // console.log(params);
     const user = await User.findOne({ user_id: params.user_id })
     if (user) {
       await User.findOneAndUpdate({ user_id: user.user_id }, { access_token: accessToken })
@@ -82,7 +81,6 @@ app.get('/auth/vkontakte/callback',
     session: false
   }),
   (req, res) => {
-    console.log(req.user);
     req.session.user_id = req.user.id
     res.redirect('/filtres')
   });
@@ -109,33 +107,8 @@ app.post('/filtres', async (req, res) => {
 
   const activity = await countAll(postIDs, token.access_token, usersWhoMadePosts.owner_id)
 
-  const merged = mergedResults([activity.likes, activity.comments])
-  const array = Object.entries(merged)
+  const toRender = convertTransform(activity)
+  console.log(toRender);
 
-  // const sorted = array.sort((a, b) => {
-  //   a[1] - b[1]
-  // })
-
-  let sorted = array.sort((a, b) => {
-    return b[1] - a[1];
-  }).slice(0, 10);
-
-  console.log(sorted);
-  // let ids = [];
-
-  sorted = sorted.map(el => {
-    return { id: el[0], count: el[1] }
-  })
-
-  console.log(sorted);
-
-  // {
-  //   user1: { id: 13123, count: 3 },
-  //   user2: { id: 213231, count: 5 },
-  // }
-
-
-  res.render('result', { sorted })
+  res.render('result', { toRender })
 })
-
-
