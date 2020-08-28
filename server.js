@@ -49,13 +49,21 @@ passport.use(new VKontakteStrategy({
 
   async function (accessToken, refreshToken, params, profile, done) {
     // console.log(params);
-    const user = await User.findOne({ user_id: params.user_id })
-    if (user) {
-      await User.findOneAndUpdate({ user_id: user.user_id }, { access_token: accessToken })
-    } else {
-      await User.create({ user_id: params.user_id, access_token: accessToken })
+    try {
+      const user = await User.findOne({ user_id: params.user_id })
+      if (user) {
+        await User.findOneAndUpdate({ user_id: user.user_id }, { access_token: accessToken })
+      } else {
+        await User.create({ user_id: params.user_id, access_token: accessToken })
+      }
+      return done(null, profile);
+    } catch (e) {
+      if (e instanceof RangeError) {
+      } else {
+        throw e;
+      }
     }
-    return done(null, profile);
+
   }
 ));
 
