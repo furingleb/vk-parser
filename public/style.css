@@ -201,3 +201,35 @@ label{
 #progress-bar {
   width: 0%;
 }
+
+
+.theme{
+  position: absolute;
+  right: 5%;
+}
+.theme .btn-dark{
+  background-color: #333;
+}
+.theme .btn-light{
+  background-color: white;
+}
+
+.darkTheme{
+  background-color: #333;
+}
+.lightTheme{
+  background-color: antiquewhite;
+}
+.lightTheme .font{
+  color: rgb(61, 61, 61);
+}
+.lightTheme .btn {
+  color: antiquewhite;
+  background-color: #333;
+}
+.lightTheme .list-group-item{
+  background-color: #333;
+}
+.lightTheme .list-group-item{
+  color: antiquewhite;
+}
