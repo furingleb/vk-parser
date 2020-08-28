@@ -187,3 +187,17 @@ label{
 .list-group{
     border-radius: 10px;
 }
+
+
+#progress {
+  visibility: hidden;
+}
+
+#analyze {
+  visibility: hidden;
+  margin-top: 2rem;
+}
+
+#progress-bar {
+  width: 0%;
+}
