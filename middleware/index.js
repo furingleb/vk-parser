@@ -12,7 +12,7 @@ module.exports = (app) => {
     passport.use(new VKontakteStrategy({
         clientID: process.env.CLIENT_ID,
         clientSecret: process.env.CLIENTSECRET,
-        callbackURL: `${process.env}auth/vkontakte/callback`
+        callbackURL: `http://statyou.herokuapp.com/auth/vkontakte/callback`
     },
 
         async function (accessToken, refreshToken, params, profile, done) {
