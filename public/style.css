@@ -234,6 +234,11 @@ label{
   color: antiquewhite;
 }
 
+.lightTheme table td th {
+  color: #333;
+  border-color: #333;
+}
+
 .table {
   color: antiquewhite;
 }
