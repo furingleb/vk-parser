@@ -9,7 +9,7 @@
 ![screenshot](readme-assets/Theme.gif)
 
 ### Аутентификация:
-Перед началом пользования приложением необходимо аутентифицироваться через VKontacte прямо внутри приложения.
+Перед началом пользования приложением необходимо аутентифицироваться через VKontakte прямо внутри приложения.
 
 ![screenshot](readme-assets/Auth.gif)
 
@@ -23,3 +23,11 @@
 
 
 Ссылка на приложение: http://statyou.herokuapp.com/
+
+Состав команды:
+
+-[Иван Каштанов](https://github.com/kashtn)
+
+-[Денис Эпштейн](https://github.com/DenisEps)
+
+-[Егор Богданов](https://github.com/YegorBogdanov)
